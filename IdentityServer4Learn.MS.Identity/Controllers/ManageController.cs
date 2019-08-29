@@ -17,7 +17,7 @@ using IdentityServer4Learn.MS.Identity.Models;
 namespace IdentityServer4Learn.MS.Identity.Controllers
 {
     [Authorize]
-    [Route("[controller]/[action]")]
+    [Route("identity/[controller]/[action]")]
     public class ManageController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
