@@ -1,0 +1,29 @@
+﻿@page
+@model IdentityServer4Learn.Client.Pages.Home.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h2>Claims</h2>
+
+<dl>
+    @foreach (var claim in Model.UserClaims)
+    {
+        <dt>@claim.Type</dt>
+        <dd>@claim.Value</dd>
+    }
+</dl>
+
+<h2>Properties</h2>
+
+<dl>
+    @foreach (var prop in Model.Properties)
+    {
+        <dt>@prop.Key</dt>
+        <dd>@prop.Value</dd>
+    }
+</dl>
+<a asp-page="./SignOut">退出</a>
+
