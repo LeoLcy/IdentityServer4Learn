@@ -1,0 +1,87 @@
+﻿1、创建IdentityServer4的服务器，添加IdentityServer4引用
+2、创建api资源api1
+3、定义一个客户端，允许访问资源api1
+4、在StartUp中配置
+ var builder = services.AddIdentityServer()
+        .AddInMemoryApiResources(Config.Apis)
+        .AddInMemoryClients(Config.Clients);
+5、项目运行在https://localhost:5001， 访问https://localhost:5001/.well-known/openid-configuration可以查看配置
+
+6、添加Api项目，运行在https://localhost:6001上,添加IdentityController控制器 [Authorize]
+7、添加package Microsoft.AspNetCore.Authentication.JwtBearer
+8、在StartUp中配置
+public void ConfigureServices(IServiceCollection services)
+    {
+        services.AddControllers();
+        services.AddAuthentication("Bearer")
+            .AddJwtBearer("Bearer", options =>
+            {
+                options.Authority = "https://localhost:5001";
+                options.RequireHttpsMetadata = false;
+                options.Audience = "api1";
+            });
+    }
+    public void Configure(IApplicationBuilder app)
+    {
+        app.UseRouting();
+        app.UseAuthentication();
+        app.UseAuthorization();
+        app.UseEndpoints(endpoints =>
+        {
+            endpoints.MapControllers();
+        });
+    }
+    //顺序要对，不然会报401错误
+    app.UseAuthentication();
+    app.UseAuthorization();
+    //AddAuthentication adds the authentication services to DI and configures Bearer as the default scheme.
+    //UseAuthentication adds the authentication middleware to the pipeline so authentication will be performed automatically on every call into the host.
+    //UseAuthorization adds the authorization middleware to make sure, our API endpoint cannot be accessed by anonymous clients.
+            
+9、现在访问https://localhost:6001/identity会返回401，以为这API需要凭证，并且被IdentityServer保护
+
+10、创建一个客户端Client1，添加package IdentityModel
+
+
+1、为IdentityServer4的服务器 添加Quickstart UI
+2、创建MVCClient客户端
+add package Microsoft.AspNetCore.Authentication.OpenIdConnect
+在Startup.ConfigureServices中添加
+JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
+
+services.AddAuthentication(options =>
+    {
+        options.DefaultScheme = "Cookies";
+        options.DefaultChallengeScheme = "oidc";
+    })
+    .AddCookie("Cookies")
+    .AddOpenIdConnect("oidc", options =>
+    {
+        options.Authority = "https://localhost:5001";
+        options.RequireHttpsMetadata = false;
+
+        options.ClientId = "mvc";
+        options.ClientSecret = "secret";
+        options.ResponseType = "code";
+
+        options.SaveTokens = true;
+    });
+在Server中添加MVC的Client
+在Configure添加
+app.UseStaticFiles();
+
+app.UseRouting();
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapDefaultControllerRoute()
+        .RequireAuthorization();
+});
+
+可以通过IdentityModel.AspNetCore类库管理 user and client access tokens 
+
+
+
+添加JavaScript Client

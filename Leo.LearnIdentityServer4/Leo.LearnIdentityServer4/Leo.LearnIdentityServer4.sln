@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30204.135
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Leo.LearnIdentityServer4", "Leo.LearnIdentityServer4.csproj", "{BA8092A4-BF82-427B-AA5F-1EB7DFEBC1B5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Leo.LearnIdentityServer4.Server", "..\Leo.LearnIdentityServer4.Server\Leo.LearnIdentityServer4.Server.csproj", "{476D5E78-FB59-4BD2-B367-F1AEF04ECEC8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Leo.LearnIdentityServer4.Api", "..\Leo.LearnIdentityServer4.Api\Leo.LearnIdentityServer4.Api.csproj", "{5742A9FC-6EF0-4B58-8EC6-165575DF60A8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Leo.LearnIdentityServer4.Client1", "..\Leo.LearnIdentityServer4.Client1\Leo.LearnIdentityServer4.Client1.csproj", "{14A1397F-184C-4CCD-8C10-A656510845DF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Leo.LearnIdentityServer4.MVCClient", "..\Leo.LearnIdentityServer4.MVCClient\Leo.LearnIdentityServer4.MVCClient.csproj", "{97069517-0F90-469B-973C-C22AEBEAA96A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Leo.LearnIdentityServer4.JSClient", "..\Leo.LearnIdentityServer4.JSClient\Leo.LearnIdentityServer4.JSClient.csproj", "{9A76D317-E84D-4D83-9D85-0ECA2553CAFA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BA8092A4-BF82-427B-AA5F-1EB7DFEBC1B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA8092A4-BF82-427B-AA5F-1EB7DFEBC1B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA8092A4-BF82-427B-AA5F-1EB7DFEBC1B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA8092A4-BF82-427B-AA5F-1EB7DFEBC1B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{476D5E78-FB59-4BD2-B367-F1AEF04ECEC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{476D5E78-FB59-4BD2-B367-F1AEF04ECEC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{476D5E78-FB59-4BD2-B367-F1AEF04ECEC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{476D5E78-FB59-4BD2-B367-F1AEF04ECEC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5742A9FC-6EF0-4B58-8EC6-165575DF60A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5742A9FC-6EF0-4B58-8EC6-165575DF60A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5742A9FC-6EF0-4B58-8EC6-165575DF60A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5742A9FC-6EF0-4B58-8EC6-165575DF60A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14A1397F-184C-4CCD-8C10-A656510845DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14A1397F-184C-4CCD-8C10-A656510845DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14A1397F-184C-4CCD-8C10-A656510845DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14A1397F-184C-4CCD-8C10-A656510845DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97069517-0F90-469B-973C-C22AEBEAA96A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97069517-0F90-469B-973C-C22AEBEAA96A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97069517-0F90-469B-973C-C22AEBEAA96A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97069517-0F90-469B-973C-C22AEBEAA96A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A76D317-E84D-4D83-9D85-0ECA2553CAFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A76D317-E84D-4D83-9D85-0ECA2553CAFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A76D317-E84D-4D83-9D85-0ECA2553CAFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A76D317-E84D-4D83-9D85-0ECA2553CAFA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {03D10337-8E46-4261-B693-A618054955B5}
+	EndGlobalSection
+EndGlobal
