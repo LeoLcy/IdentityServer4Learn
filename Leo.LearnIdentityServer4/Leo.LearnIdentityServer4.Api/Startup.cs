@@ -30,10 +30,10 @@ namespace Leo.LearnIdentityServer4.Api
             services.AddAuthentication("Bearer")
             .AddJwtBearer("Bearer", options =>
             {
-                options.Authority = "https://localhost:5011";
+                options.Authority = "https://localhost:5001";
                 options.RequireHttpsMetadata = false;
 
-                options.Audience = "api1";
+                options.Audience = "leo.ld4Learn.Api";
             });
             //ÔÊÐí¿çÓò·ÃÎÊ
             services.AddCors(options =>

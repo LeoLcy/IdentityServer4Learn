@@ -1,0 +1,32 @@
+﻿
+https://localhost:5011/connect/token
+  grant_type=refresh_token&
+  client_id=CLIENT_ID&
+  client_secret=CLIENT_SECRET&
+  refresh_token=REFRESH_TOKEN
+上面 URL 中，grant_type参数为refresh_token表示要求更新令牌，client_id参数和client_secret参数用于确认身份，
+refresh_token参数就是用于更新令牌的令牌，在获取token 的时候会返回refresh_token。
+
+ new Client
+                {
+                    ClientId = "client_credentials",
+                    ClientSecrets = { new Secret("secret".Sha256()) },
+                    ClientName = "client_credentials Client",
+                    AllowedGrantTypes = GrantTypes.ClientCredentials,
+                    //RefreshTokenExpiration = TokenExpiration.Absolute,//刷新令牌将在固定时间点到期
+                    AbsoluteRefreshTokenLifetime = 2592000,//RefreshToken的最长生命周期,默认30天
+                    RefreshTokenExpiration = TokenExpiration.Sliding,//刷新令牌时，将刷新RefreshToken的生命周期。RefreshToken的总生命周期不会超过AbsoluteRefreshTokenLifetime。
+                    SlidingRefreshTokenLifetime = 3600,//以秒为单位滑动刷新令牌的生命周期。
+                    AllowedScopes =
+                    {
+                        ////如果要获取id_token,必须在scopes中加上OpenId和Profile
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        //如果要获取refresh_tokens ,必须在scopes中加上OfflineAccess
+                        IdentityServerConstants.StandardScopes.OfflineAccess,
+                        "api1"
+                    },
+                    RefreshTokenUsage=TokenUsage.OneTimeOnly,
+                    //如果要获取refresh_tokens ,必须把AllowOfflineAccess设置为true
+                    AllowOfflineAccess=true
+                }

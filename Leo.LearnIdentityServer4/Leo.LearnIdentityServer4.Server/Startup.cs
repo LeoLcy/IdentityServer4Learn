@@ -16,7 +16,6 @@ namespace Leo.LearnIdentityServer4.Server
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
 
             var builder = services.AddIdentityServer()
                 .AddInMemoryIdentityResources(Config.IdentityResources)
@@ -24,6 +23,8 @@ namespace Leo.LearnIdentityServer4.Server
                                     .AddInMemoryClients(Config.Clients)
                                     .AddTestUsers(Config.GetUsers());
             builder.AddDeveloperSigningCredential();
+
+            services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -35,9 +36,10 @@ namespace Leo.LearnIdentityServer4.Server
             }
             app.UseStaticFiles();
             app.UseRouting();
-
-            app.UseAuthorization();
+            
+            //中间件的顺序会影响权限认证
             app.UseIdentityServer();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

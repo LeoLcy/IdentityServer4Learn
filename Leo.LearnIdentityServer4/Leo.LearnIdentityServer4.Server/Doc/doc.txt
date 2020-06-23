@@ -31,8 +31,16 @@ public void ConfigureServices(IServiceCollection services)
             endpoints.MapControllers();
         });
     }
+     /*
+     * app.UseAuthentication();//鉴权，检测有没有登录，登录的是谁，赋值给User
+     * app.UseAuthorization();//就是授权，检测权限
+     * 在.net 2.1中是没有UseAuthorization方法的，这两个单词长的十分相似，而且还经常一起出现，很多时候容易搞混了。
+     * 在3.0之后微软明确的把授权功能提取到了Authorization中间件里，所以我们需要在UseAuthentication之后再次UseAuthorization。否则，当你使用授权功能比如使用[Authorize]属性的时候系统就会报错。
+     */
     //顺序要对，不然会报401错误
+    // who are you?
     app.UseAuthentication();
+    // are you allowed?
     app.UseAuthorization();
     //AddAuthentication adds the authentication services to DI and configures Bearer as the default scheme.
     //UseAuthentication adds the authentication middleware to the pipeline so authentication will be performed automatically on every call into the host.
@@ -85,3 +93,7 @@ app.UseEndpoints(endpoints =>
 
 
 添加JavaScript Client
+服务器端
+//中间件的顺序会影响权限认证
+app.UseIdentityServer();
+app.UseAuthorization();

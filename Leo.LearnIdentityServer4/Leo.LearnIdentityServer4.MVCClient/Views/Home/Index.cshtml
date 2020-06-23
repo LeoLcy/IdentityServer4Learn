@@ -5,9 +5,23 @@
 @using Microsoft.AspNetCore.Authentication
 <a href="Home/Logout">退出</a>
 <h2>Claims</h2>
-
 <dl>
-    这是测试
+    @foreach (var identity in User.Identities)
+    {
+        <dd>@identity.Label</dd>
+        <dd>@identity.Name</dd>
+        <dd>@identity.NameClaimType</dd>
+        <dd>@identity.RoleClaimType</dd>
+        foreach (var claim in identity.Claims)
+        {
+            <dt>@claim.Type</dt>
+            <dd>@claim.Value</dd>
+        }
+
+    }
+</dl>
+这是测试
+<dl>
     @foreach (var claim in User.Claims)
     {
         <dt>@claim.Type</dt>

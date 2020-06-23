@@ -1,0 +1,45 @@
+﻿授权码（authorization code）方式
+授权码（authorization code）方式，指的是第三方应用先申请一个授权码，然后再用该码获取令牌。
+第一步，A 网站提供一个链接，用户点击后就会跳转到 B 网站，授权用户数据给 A 网站使用。下面就是 A 网站跳转 B 网站的一个示意链接。
+服务器的配置
+ new Client
+                {
+                    ClientId = "authorization_code",
+                    // secret for authentication
+                    ClientSecrets ={new Secret("secret".Sha256())},
+                    AllowedGrantTypes = GrantTypes.Code,
+                    //是否显示授权页
+                    RequireConsent = true,
+                    //为ture，请求参数需要code_challenge和code_challenge_method值
+                    //RequirePkce = true,
+                    //AllowPlainTextPkce=true,
+                    //需要跳回的客户端地址
+                    RedirectUris = { "https://localhost:8001/signin-oidc" },
+                    PostLogoutRedirectUris = { "https://localhost:8001/signout-callback-oidc"  },
+                    AllowedScopes = new List<string>
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,IdentityServerConstants.StandardScopes.Profile,
+                        "api1"
+                    }
+                    ,AllowOfflineAccess=true
+                }
+https://localhost:5011/connect/authorize?client_id=authorization_code&redirect_uri=https://localhost:8001/signin-oidc&response_type=code&state=qqqq&scope=openid
+上面 URL 中，response_type参数表示要求返回授权码（code），client_id参数让 B 知道是谁在请求，redirect_uri参数是 B 接受或拒绝请求后的跳转网址，scope参数表示要求的授权范围（这里是只读）。
+
+第二步，用户跳转后，B 网站会要求用户登录，然后询问是否同意给予 A 网站授权。用户表示同意，这时 B 网站就会跳回redirect_uri参数指定的网址。跳转时，会传回一个授权码，就像下面这样。
+https://localhost:8001/signn-oidc?code=husOjfBiHdNX-q95nGYyLHZOluyWJJ_7IocRt3c2ooM&scope=openid&state=qqqq&session_state=iOZW649TtnH9yah6_MfnYDXE-8g3TS_6ByDFf5DtKa8.8vaWjoI4Ud4ed05mcHbNrA
+上面 URL 中，code参数就是授权码。
+
+第三步，A 网站拿到授权码以后，就可以在后端，向 B 网站请求令牌。
+https://localhost:5011/connect/token
+client_id:authorization_code
+client_secret:secret
+grant_type:authorization_code
+redirect_uri:https://localhost:8001/signin-oidc
+code:husOjfBiHdNX-q95nGYyLHZOluyWJJ_7IocRt3c2ooM  为第二步中获取到的code
+code_verifier:ttttttttttttttttttttttttttttttttttttttttttttt
+上面 URL 中，client_id参数和client_secret参数用来让 B 确认 A 的身份（client_secret参数是保密的，因此只能在后端发请求），grant_type参数的值是AUTHORIZATION_CODE，表示采用的授权方式是授权码，code参数是上一步拿到的授权码，redirect_uri参数是令牌颁发后的回调网址。
+获取到token
+
+第四步，B 网站收到请求以后，就会颁发令牌。具体做法是向redirect_uri指定的网址，发送一段 JSON 数据。
+

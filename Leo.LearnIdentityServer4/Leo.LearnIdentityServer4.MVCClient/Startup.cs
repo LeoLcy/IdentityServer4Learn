@@ -36,16 +36,18 @@ namespace Leo.LearnIdentityServer4.MVCClient
                 .AddCookie("Cookies")
                 .AddOpenIdConnect("oidc", options =>
                 {
-                    options.Authority = "https://localhost:5011";
+                    options.Authority = "https://localhost:5001";
                     options.RequireHttpsMetadata = false;
 
                     options.ClientId = "mvc_client";
-                    options.ClientSecret = "secret";
-                    options.ResponseType = "code";
+                    options.ClientSecret = "mvc_client_secret";
+                    options.ResponseType = "code id_token";
 
                     options.SaveTokens = true;
-                    options.Scope.Add("api1");
+                    options.Scope.Add("leo.ld4Learn.Api");
                     options.Scope.Add("offline_access");
+                    options.Scope.Add("openid");
+                    options.Scope.Add("profile");
                 });
         }
 
@@ -68,7 +70,12 @@ namespace Leo.LearnIdentityServer4.MVCClient
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            /*
+             * app.UseAuthentication();//鉴权，检测有没有登录，登录的是谁，赋值给User
+             * app.UseAuthorization();//就是授权，检测权限
+             * 在.net 2.1中是没有UseAuthorization方法的，这两个单词长的十分相似，而且还经常一起出现，很多时候容易搞混了。
+             * 在3.0之后微软明确的把授权功能提取到了Authorization中间件里，所以我们需要在UseAuthentication之后再次UseAuthorization。否则，当你使用授权功能比如使用[Authorize]属性的时候系统就会报错。
+             */
             app.UseAuthentication();
             app.UseAuthorization();
 

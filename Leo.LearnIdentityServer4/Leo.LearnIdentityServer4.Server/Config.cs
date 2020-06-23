@@ -81,9 +81,9 @@ namespace Leo.LearnIdentityServer4.Server
                     RequirePkce = true,
                     RequireClientSecret = false,
 
-                    RedirectUris =           { "https://localhost:9001/callback.html" },
-                    PostLogoutRedirectUris = { "https://localhost:9001/index.html" },
-                    AllowedCorsOrigins =     { "https://localhost:9001" },
+                    RedirectUris =           { "https://localhost:8001/callback.html" },
+                    PostLogoutRedirectUris = { "https://localhost:8001/index.html" },
+                    AllowedCorsOrigins =     { "https://localhost:8001" },
 
                     AllowedScopes =
                     {
@@ -91,6 +91,81 @@ namespace Leo.LearnIdentityServer4.Server
                         IdentityServerConstants.StandardScopes.Profile,
                         "api1"
                     }
+                },
+                new Client
+                {
+                    ClientId = "authorization_code",
+                    // secret for authentication
+                    ClientSecrets ={new Secret("secret".Sha256())},
+                    AllowedGrantTypes = GrantTypes.Code,
+                    //是否显示授权页
+                    RequireConsent = true,
+                    //为ture，请求参数需要code_challenge和code_challenge_method值
+                    //RequirePkce = true,
+                    //AllowPlainTextPkce=true,
+                    //需要跳回的客户端地址
+                    RedirectUris = { "http://localhost:8000/signin-oidc","https://localhost:8001/signin-oidc" },
+                    PostLogoutRedirectUris = { "http://localhost:8000/signout-callback-oidc", "https://localhost:8001/signout-callback-oidc"  },
+
+                    AllowedScopes = new List<string>
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,IdentityServerConstants.StandardScopes.Profile,
+                        "api1"
+                    }
+                    ,AllowOfflineAccess=true
+                },
+                new Client
+                {
+                    ClientId = "implicit",
+                    AllowedGrantTypes = GrantTypes.Implicit,
+                    //是否显示授权页
+                    RequireConsent = true,
+                    AllowAccessTokensViaBrowser=true,
+                    //需要跳回的客户端地址
+                    RedirectUris = { "https://localhost:8001/implicit.html" },
+                    AllowedScopes = new List<string>
+                    {
+                        "api1"
+                    }
+                    ,AllowOfflineAccess=true
+                },
+                new Client
+                {
+                    ClientId = "password_grant",
+                    ClientSecrets = { new Secret("secret".Sha256()) },
+                    ClientName = "password_grant Client",
+                    AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
+                    AllowedScopes =
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        IdentityServerConstants.StandardScopes.OfflineAccess,
+                        "api1"
+                    },
+                     AllowOfflineAccess=true
+                },
+                new Client
+                {
+                    ClientId = "client_credentials",
+                    ClientSecrets = { new Secret("secret".Sha256()) },
+                    ClientName = "client_credentials Client",
+                    AllowedGrantTypes = GrantTypes.ClientCredentials,
+                    //RefreshTokenExpiration = TokenExpiration.Absolute,//刷新令牌将在固定时间点到期
+                    AbsoluteRefreshTokenLifetime = 2592000,//RefreshToken的最长生命周期,默认30天
+                    RefreshTokenExpiration = TokenExpiration.Sliding,//刷新令牌时，将刷新RefreshToken的生命周期。RefreshToken的总生命周期不会超过AbsoluteRefreshTokenLifetime。
+                    SlidingRefreshTokenLifetime = 3600,//以秒为单位滑动刷新令牌的生命周期。
+                    AllowedScopes =
+                    {
+                        ////如果要获取id_token,必须在scopes中加上OpenId和Profile
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        //如果要获取refresh_tokens ,必须在scopes中加上OfflineAccess
+                        IdentityServerConstants.StandardScopes.OfflineAccess,
+                        "api1"
+                    },
+                    RefreshTokenUsage=TokenUsage.OneTimeOnly,
+                    //如果要获取refresh_tokens ,必须把AllowOfflineAccess设置为true
+                    AllowOfflineAccess=true
                 }
             };
 

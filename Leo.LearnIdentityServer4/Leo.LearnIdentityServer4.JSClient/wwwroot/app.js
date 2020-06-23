@@ -17,10 +17,10 @@ document.getElementById("logout").addEventListener("click", logout, false);
 var config = {
     authority: "https://localhost:5011",
     client_id: "js",
-    redirect_uri: "https://localhost:9001/callback.html",
+    redirect_uri: "https://localhost:8001/callback.html",
     response_type: "code",
     scope: "openid profile api1",
-    post_logout_redirect_uri: "https://localhost:9001/index.html",
+    post_logout_redirect_uri: "https://localhost:8001/index.html",
 };
 var mgr = new Oidc.UserManager(config);
 mgr.getUser().then(function (user) {

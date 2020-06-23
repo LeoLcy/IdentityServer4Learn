@@ -1,0 +1,8 @@
+﻿1、添加IdentityServer4、IdentityServer4.EntityFramework、IdentityServer4.EntityFramework.Storage包
+2、添加Microsoft.EntityFrameworkCore.SqlServer包
+3、添加Microsoft.EntityFrameworkCore.Design，可以执行迁移命令
+dotnet tool install --global dotnet-ef
+dotnet add package Microsoft.EntityFrameworkCore.Design
+
+dotnet ef migrations add InitialIdentityServerPersistedGrantDbMigration -c PersistedGrantDbContext -o Data/Migrations/IdentityServer/PersistedGrantDb
+dotnet ef migrations add InitialIdentityServerConfigurationDbMigration -c ConfigurationDbContext -o Data/Migrations/IdentityServer/ConfigurationDb
